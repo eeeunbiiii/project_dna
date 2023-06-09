@@ -22,7 +22,7 @@ export default function NewBoard() {
 
   return (
     <div className="p-10">
-      <h1 className="text-3xl mb-4">New Board</h1>
+      <h1 className="text-3xl mb-4">New Diary</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="title">

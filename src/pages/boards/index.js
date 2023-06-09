@@ -3,6 +3,17 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
+
+export async function getServerSideProps() {
+    const boards = await prisma.board.findMany()
+  
+    return {
+      props: {
+        boards: JSON.parse(JSON.stringify(boards)),
+      },
+    }
+  } 
+
 export default function Boards({ boards }) {
   return (
     <div className="p-10">
@@ -23,13 +34,3 @@ export default function Boards({ boards }) {
     </div>
   )
 }
-
-export async function getServerSideProps() {
-  const boards = await prisma.board.findMany()
-
-  return {
-    props: {
-      boards: JSON.parse(JSON.stringify(boards)),
-    },
-  }
-} 

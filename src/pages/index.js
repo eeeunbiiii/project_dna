@@ -1,17 +1,36 @@
-import React from 'react';
-import { useRouter } from 'next/router';
-import BoardsIndex from './boards';
+import Link from 'next/link'
+import { PrismaClient } from '@prisma/client'
 
-const HomePage = () => {
-  const router = useRouter();
+const prisma = new PrismaClient()
 
-  // 예시로 루트 URL('/')에 접속하면 BoardsIndex 컴포넌트를 렌더링합니다.
-  // 필요에 따라 다른 경로에 다른 컴포넌트를 연결할 수 있습니다.
-  if (router.pathname === '/') {
-    return <BoardsIndex />;
-  }
 
-  return null;
-};
+export async function getServerSideProps() {
+    const boards = await prisma.board.findMany()
+  
+    return {
+      props: {
+        boards: JSON.parse(JSON.stringify(boards)),
+      },
+    }
+  } 
 
-export default HomePage;
+export default function Boards({ boards }) {
+  return (
+    <div className="p-10">
+      <h1 className="text-3xl mb-4">Dairy and Answer : DnA</h1>
+      {boards.map((board) => (
+        <div key={board.id} className="mb-6">
+          <h2 className="text-xl font-bold">{board.title}</h2>
+          <Link href={`/boards/${board.id}`}>
+            <span className="text-blue-500">View posts</span>
+          </Link>
+        </div>
+      ))}
+      <Link href="/boards/new">
+        <span className="mt-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          Create a new board
+        </span>
+      </Link>
+    </div>
+  )
+}
