@@ -8,9 +8,10 @@ datasource db {
 }
 
 model Board {
-  id    Int     @id @default(autoincrement())
-  title String
-  posts Post[]  @relation("BoardToPost")
+  id       Int    @id @default(autoincrement())
+  title    String
+  password String
+  posts    Post[] @relation("BoardToPost")
 }
 
 model Post {

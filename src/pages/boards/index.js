@@ -17,7 +17,7 @@ export async function getServerSideProps() {
 export default function Boards({ boards }) {
   return (
     <div className="p-10">
-      <h1 className="text-3xl mb-4">Boards</h1>
+      <h1 className="text-3xl mb-4">Dairy and Answer : DnA</h1>
       {boards.map((board) => (
         <div key={board.id} className="mb-6">
           <h2 className="text-xl font-bold">{board.title}</h2>

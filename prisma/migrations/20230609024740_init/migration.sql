@@ -1,7 +1,8 @@
 -- CreateTable
 CREATE TABLE "Board" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "title" TEXT NOT NULL
+    "title" TEXT NOT NULL,
+    "password" TEXT NOT NULL
 );
 
 -- CreateTable

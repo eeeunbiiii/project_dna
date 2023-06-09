@@ -6,9 +6,11 @@ export default async function handle(req, res) {
   if (req.method === 'POST') {
     const body = JSON.parse(req.body)
     const { title } = body
+    const { password } = body
     const board = await prisma.board.create({
       data: {
         title,
+        password,
       },
     })
     res.json(board)
