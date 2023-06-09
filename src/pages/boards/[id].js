@@ -1,31 +1,77 @@
 import Link from 'next/link'
 import { PrismaClient } from '@prisma/client'
+import { useState } from 'react';
+
 
 const prisma = new PrismaClient()
 
 export default function Board({ board, posts }) {
-  return (
-    <div className="p-10">
-      <h1 className="text-3xl mb-4">{board.title}</h1>
-      {posts.map((post) => (
-        <div key={post.id} className="mb-6">
-          <h2 className="text-xl font-bold">{post.title}</h2>
-          <Link href={`/posts/${post.id}`}>
-            <span className="text-blue-500 cursor-pointer">Read more</span>
-          </Link>
-        </div>
-      ))}
-      <Link href={`/boards/${board.id}/new`}>
-        <button className="mt-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          Create a new post
-        </button>
-      </Link>
-    </div>
-  )
-}
+    const [authenticated, setAuthenticated] = useState(false);
+    const [password, setPassword] = useState('');
+  
+    const handlePasswordChange = (event) => {
+      setPassword(event.target.value);
+    };
+  
+    const handlePasswordSubmit = (event) => {
+      event.preventDefault();
+      // 여기서 비밀번호를 검증하고, 올바른 경우에만 인증 상태를 변경합니다.
+      if (password === '올바른 비밀번호') {
+        setAuthenticated(true);
+      }
+    };
+  
+    return (
+      <div className="p-10">
+        {authenticated ? (
+          <div>
+            <h1 className="text-3xl mb-4">{board.title}</h1>
+            {posts.map((post) => (
+              <div key={post.id} className="mb-6">
+                <h2 className="text-xl font-bold">{post.title}</h2>
+                <Link href={`/posts/${post.id}`}>
+                  <span className="text-blue-500 cursor-pointer">Read more</span>
+                </Link>
+              </div>
+            ))}
+            <Link href={`/boards/${board.id}/new`}>
+              <button className="mt-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Create a new post
+              </button>
+            </Link>
+          </div>
+        ) : (
+            <form onSubmit={handlePasswordSubmit} className="flex flex-col max-w-md mx-auto">
+            <input
+              type="password"
+              value={password}
+              onChange={handlePasswordChange}
+              placeholder="비밀번호를 입력하세요"
+              className="border border-gray-300 px-4 py-2 rounded-md mb-4"
+            />
+            <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              확인
+            </button>
+          </form>
+        )}
+      </div>
+    );
+  }
+  
 
 export async function getServerSideProps({ params }) {
   const { id } = params
+  const { password } = req.cookies
+
+  if (password !== '올바른 비밀번호') {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
+
   const board = await prisma.board.findUnique({
     where: {
       id: parseInt(id),
