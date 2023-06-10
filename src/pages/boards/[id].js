@@ -8,16 +8,20 @@ const prisma = new PrismaClient()
 export default function Board({ board, posts }) {
     const [authenticated, setAuthenticated] = useState(false);
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
   
     const handlePasswordChange = (event) => {
       setPassword(event.target.value);
     };
+
   
     const handlePasswordSubmit = (event) => {
       event.preventDefault();
-      // 여기서 비밀번호를 검증하고, 올바른 경우에만 인증 상태를 변경합니다.
-      if (password === '올바른 비밀번호') {
+      //비밀번호검증
+      if (password === board.password) {
         setAuthenticated(true);
+      }else {
+        setError('비밀번호가 올바르지 않습니다. 다시 입력해주세요.');
       }
     };
   
@@ -49,6 +53,7 @@ export default function Board({ board, posts }) {
               placeholder="비밀번호를 입력하세요"
               className="border border-gray-300 px-4 py-2 rounded-md mb-4"
             />
+             {error && <p className="text-red-500">{error}</p>}
             <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
               확인
             </button>
@@ -59,24 +64,16 @@ export default function Board({ board, posts }) {
   }
   
 
-export async function getServerSideProps({ params }) {
+export async function getServerSideProps({ params, req }) {
+
   const { id } = params
-  const { password } = req.cookies
-
-  if (password !== '올바른 비밀번호') {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false,
-      },
-    };
-  }
-
+  
   const board = await prisma.board.findUnique({
     where: {
       id: parseInt(id),
     },
   })
+
   const posts = await prisma.post.findMany({
     where: {
       boardId: parseInt(id),
