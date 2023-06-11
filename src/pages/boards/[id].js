@@ -34,18 +34,19 @@ export default function Board({ board, posts }) {
               <div key={post.id} className="mb-6">
                 <h2 className="text-xl font-bold">{post.title}</h2>
                 <Link href={`/posts/${post.id}`}>
-                  <span className="text-blue-500 cursor-pointer">Read more</span>
+                  <span className="text-blue-500 cursor-pointer">읽어보기</span>
                 </Link>
               </div>
             ))}
             <Link href={`/boards/${board.id}/new`}>
               <button className="mt-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Create a new post
+                일기 작성하기
               </button>
             </Link>
           </div>
         ) : (
             <form onSubmit={handlePasswordSubmit} className="flex flex-col max-w-md mx-auto">
+            <h1 className="text-3xl mb-4">{board.title}</h1>
             <input
               type="password"
               value={password}
