@@ -16,18 +16,17 @@ export default function Post({ post }) {
   useEffect(() => {
     const fetchComment = async () => {
       try {
-        setLoading(true);
-        const response = await fetch('/api/comment', {
-          method: 'POST',
-          body: JSON.stringify({ contents: post.content }),
+          setLoading(true);
+           const response = await fetch('/api/comment', {
+           method: 'POST',
+           body: JSON.stringify({ contents: post.content, boardId }),
           headers: { 'Content-Type': 'application/json' },
-        });
-
-        const data = await response.json();
-
-        setComment(data.comment);
-
-        console.log(data.comment);
+       });
+          
+       const data = await response.json();
+      
+       setComment(data.comment);
+       console.log(data.comment);
       } catch (error) {
         console.error(error);
       } finally {
@@ -47,7 +46,7 @@ export default function Post({ post }) {
       {loading ? (
         <p>로딩중 입니다 ...</p>
       ) : (
-        <p className="text-blue-500">{comment}</p>
+        <p className="text-blue-500">선생님의 한 마디 : {comment}</p>
       )}
       <br></br>
       <button
