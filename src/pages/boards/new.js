@@ -29,12 +29,18 @@ export default function NewBoard() {
 
 
   return (
+    
     <div className="p-10">
-      <h1 className="text-3xl mb-4">New Diary</h1>
+       <div>
+        <a href="/">Diary n Answer</a>
+        <br />_________________________________________________________________<br />
+    <br />
+  </div>
+      <h1 className="text-3xl mb-4">📒 나만의 일기장 만들기</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="title">
-            Title
+          ✅ 일기장의 이름은?
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -46,7 +52,7 @@ export default function NewBoard() {
         </div>
         <div className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
-          Password
+          ✅ 비밀번호는?     ❗변경/조회 불가하니 꼭 기억하세요❗
         </label>
         <input
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -57,9 +63,9 @@ export default function NewBoard() {
         />
       </div>
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded"
           type="submit">
-          Create
+          짜-잔!
         </button>
       </form>
     </div>

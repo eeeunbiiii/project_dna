@@ -39,18 +39,23 @@ export default function Post({ post, boardId, postId }) {
 
   return (
     <div className="p-10">
-      <h1 className="text-3xl mb-4 font-bold">{post.title}</h1>
+      <div>
+        <a href="/">Diary n Answer</a>
+        <br />_________________________________________________________________<br />
+    <br />
+  </div>
+      <h1 className="text-3xl mb-4 font-bold">📄 {post.title}<br></br></h1>
       <p className="text-gray-600">{post.content}</p>
       <br></br>
 
       {loading ? (
         <p>로딩중 입니다 ...</p>
       ) : (
-        <p className="text-blue-500">선생님의 한마디 : {comment}</p>
+        <p className="text-blue-500">선생님의 한마디<br></br> : {comment}</p> 
       )}
       <br></br>
       <button
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        className="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded"
         onClick={handleGoBack}
       >
         일기장으로 돌아가기
