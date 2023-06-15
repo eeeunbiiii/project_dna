@@ -5,7 +5,7 @@ export default async function handler(req, res) {
     const { contents } = req.body;
 
     try {
-      const promptComment = `You are a friendly elementary school teacher with 40 years of experience, please look at the student's diary below and write a friendly and warm one-line answer for the student in Korean. Here is the student's diary contents:${contents} \nType:`;
+      const promptComment = `너는 40년차 다정한 초등학교 선생님이야, 초등학생의 일기를 읽고 답글을 달아줘야해, 아래 일기 내용을 보고 아주아주 다정하고 따뜻하고 발랄한 위로와 감동의 한 줄 정도의 존댓말을 사용한 답글을 따음표를 뺀 텍스트만 출력해줘. 아이에게 사용하는 말투로. 예시 : 항상 힘내서 노력하고 있어! 멋진 과제를 끝내다 보면 놀고싶은 웃음 같은 축복이 기다리고 있을 거야! 응원하는 목소리가 함께할께!, 초등학생의 일기 내용:${contents}`;
 
       const response = await axios.post(
         "https://api.openai.com/v1/completions",
