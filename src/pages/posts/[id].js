@@ -19,7 +19,7 @@ export default function Post({ post }) {
           setLoading(true);
            const response = await fetch('/api/comment', {
            method: 'POST',
-           body: JSON.stringify({ contents: post.content, boardId }),
+           body: JSON.stringify({ contents: post.content }),
           headers: { 'Content-Type': 'application/json' },
        });
           
@@ -46,7 +46,7 @@ export default function Post({ post }) {
       {loading ? (
         <p>로딩중 입니다 ...</p>
       ) : (
-        <p className="text-blue-500">선생님의 한 마디 : {comment}</p>
+        <p className="text-blue-500">선생님의 한마디 : {comment}</p>
       )}
       <br></br>
       <button
