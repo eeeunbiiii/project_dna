@@ -21,4 +21,5 @@ model Post {
   boardId Int
   createdAt DateTime @default(now())
   board   Board  @relation("BoardToPost", fields: [boardId], references: [id])
+  comment String?
 }

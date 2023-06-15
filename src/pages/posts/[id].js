@@ -4,11 +4,11 @@ import { useEffect, useState } from 'react';
 
 const prisma = new PrismaClient();
 
-export default function Post({ post }) {
+export default function Post({ post, boardId, postId }) {
   const router = useRouter();
   const [comment, setComment] = useState('');
   const [loading, setLoading] = useState(false);
-
+  
   const handleGoBack = () => {
     router.back();
   };
@@ -16,18 +16,17 @@ export default function Post({ post }) {
   useEffect(() => {
     const fetchComment = async () => {
       try {
-        setLoading(true);
-        const response = await fetch('/api/comment', {
-          method: 'POST',
-          body: JSON.stringify({ contents: post.content }),
+          setLoading(true);
+           const response = await fetch('/api/comment', {
+           method: 'POST',
+           body: JSON.stringify({ contents: post.content, boardId, postId }),
           headers: { 'Content-Type': 'application/json' },
-        });
-
-        const data = await response.json();
-
-        setComment(data.comment);
-
-        console.log(data.comment);
+       });
+          
+       const data = await response.json();
+      
+       setComment(data.comment);
+       console.log(data.comment);
       } catch (error) {
         console.error(error);
       } finally {
@@ -47,7 +46,7 @@ export default function Post({ post }) {
       {loading ? (
         <p>로딩중 입니다 ...</p>
       ) : (
-        <p className="text-blue-500">{comment}</p>
+        <p className="text-blue-500">선생님의 한마디 : {comment}</p>
       )}
       <br></br>
       <button
@@ -71,6 +70,8 @@ export async function getServerSideProps({ params }) {
   return {
     props: {
       post: JSON.parse(JSON.stringify(post)),
+      boardId: post.boardId,
+      postId: post.id,
     },
   };
 }
