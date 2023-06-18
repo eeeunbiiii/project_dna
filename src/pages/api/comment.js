@@ -31,7 +31,7 @@ export default async function handler(req, res) {
           "https://api.openai.com/v1/completions",
           {
             prompt: promptComment,
-            max_tokens: 150,
+            max_tokens: 500,
             model: "text-davinci-003"
           },
           {
